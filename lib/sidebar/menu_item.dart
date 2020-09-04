@@ -24,7 +24,7 @@ class MenuItem extends StatelessWidget {
           fit: BoxFit.fitWidth,
           child: Text(
             title,
-            style: TextStyle(color: color, fontSize: 40, letterSpacing: 2),
+            style: TextStyle(color: color, fontSize: 50, letterSpacing: 2),
           ),
         ),
       ),
