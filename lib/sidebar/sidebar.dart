@@ -139,7 +139,7 @@ class _SideBarState extends State<SideBar>
                       ),
                       MenuItem( height:MediaQuery.of(context).size.height-height / 4.48-kToolbarHeight,
                         width:MediaQuery.of(context).size.width*0.8,
-                        title: 'help',
+                        title: 'maps',
                         color: Colors.white,
                         func: () {
                           onIconPressed();
