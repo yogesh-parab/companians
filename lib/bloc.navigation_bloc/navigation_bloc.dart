@@ -6,11 +6,12 @@ import 'package:Final/Pages/Shop.dart';
 import 'package:Final/Pages/about_us.dart';
 import 'package:Final/Pages/homepage.dart';
 import 'package:Final/Pages/Help.dart';
-
+import 'package:Final/Pages/add_pet.dart';
 
 import 'package:bloc/bloc.dart';
 
 enum NavigationEvents {
+  AddPetClickedEvent,
   AboutUsClickedEvent,
   AdoptClickedEvent,
   BreedsClickedEvent,
@@ -55,6 +56,11 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
       case NavigationEvents.ShopClickedEvent:
         yield Shop();
         break;
+      case NavigationEvents.AddPetClickedEvent:
+        yield AddPet();
+        break;
+        
+
     }
 
   }

@@ -1,8 +1,15 @@
 import 'package:Final/bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:Final/lists/animalList.dart';
 import 'package:flutter/material.dart';
 import 'package:Final/bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomePage extends StatelessWidget with NavigationStates {
+class HomePage extends StatefulWidget with NavigationStates {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +18,10 @@ class HomePage extends StatelessWidget with NavigationStates {
         backgroundColor: Color(0xffBC0253),
         child: Icon(Icons.add),
         shape: CircleBorder(side: BorderSide(color: Colors.white, width: 3.0)),
-        onPressed: null,
+        onPressed: () {
+          BlocProvider.of<NavigationBloc>(context)
+              .add(NavigationEvents.AddPetClickedEvent);
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 32,
@@ -78,7 +88,7 @@ class HomePage extends StatelessWidget with NavigationStates {
                       topRight: Radius.circular(40.0),
                       topLeft: Radius.circular(40.0),
                     ))),
-          )
+          ),Positioned(bottom:0,child: AnimalList()),
         ],
       ),
     );
