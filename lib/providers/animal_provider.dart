@@ -12,20 +12,22 @@ class AnimalProvider with ChangeNotifier {
   String _breed;
   String _gender;
   String _id;
-  DateTime _vet1;
-  DateTime _groom;
-  TimeOfDay _feed1;
-  TimeOfDay _feed2;
+  String _vet1;
+  String _groom;
+  String _feed1;
+  String _feed2;
+  String _image;
   var uuid = Uuid();
 
   String get name => _name;
   String get type => _type;
   String get breed => _breed;
   String get gender => _gender;
-  DateTime get vet1 => _vet1;
-  DateTime get groom => _groom;
-  TimeOfDay get feed1 => _feed1;
-  TimeOfDay get feed2 => _feed2;
+  String get vet1 => _vet1;
+  String get groom => _groom;
+  String get feed1 => _feed1;
+  String get feed2 => _feed2;
+  String get image => _image;
 
   chnageName(String val) {
     _name = val;
@@ -47,16 +49,13 @@ class AnimalProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  chnagevet(
-    DateTime vet,
-    DateTime groom,
-    TimeOfDay feed1,
-    TimeOfDay feed2,
-  ) {
-    _vet1 = vet;
-    //_groom = groom;
-    //_feed1 = feed1;
-    //_feed2 = feed2;
+  chnagevet(DateTime vet, DateTime groom, TimeOfDay feed1, TimeOfDay feed2,
+      String image) {
+    _vet1 = vet.toString();
+    _groom = groom.toString();
+    _feed1 = feed1.toString();
+    _feed2 = feed2.toString();
+    _image = image;
     notifyListeners();
   }
 
@@ -67,9 +66,10 @@ class AnimalProvider with ChangeNotifier {
     _gender = animal.gender;
     _id = animal.id;
     _vet1 = animal.vet1;
-    _groom = animal.grooming;
+    _groom = animal.groom;
     _feed1 = animal.feed1;
     _feed2 = animal.feed2;
+    _image = animal.image;
   }
 
   saveProduct() {
@@ -82,9 +82,10 @@ class AnimalProvider with ChangeNotifier {
         gender: gender,
         id: uuid.v4(),
         vet1: vet1,
-        grooming: groom,
+        groom: groom,
         feed1: feed1,
         feed2: feed2,
+        image:image,
       );
       firestoreService.saveAnimal(newAnimal);
     } else {
@@ -95,9 +96,10 @@ class AnimalProvider with ChangeNotifier {
         gender: gender,
         id: _id,
         vet1: vet1,
-        grooming: groom,
+        groom: groom,
         feed1: feed1,
         feed2: feed2,
+        image:image,
       );
       firestoreService.saveAnimal(updateAnimal);
     }

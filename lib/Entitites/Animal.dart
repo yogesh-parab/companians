@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Animal {
@@ -8,11 +9,11 @@ class Animal {
   String breed;
   String gender;
   String id;
-  DateTime grooming;
-  TimeOfDay feed1;
-  TimeOfDay feed2;
-  DateTime vet1;
-  File image;
+  String groom;
+  String feed1;
+  String feed2;
+  String vet1;
+  String image;
 
   Animal({
     this.name,
@@ -20,10 +21,11 @@ class Animal {
     this.breed,
     this.gender,
     this.id,
-    this.grooming,
+    this.groom,
     this.feed1,
     this.feed2,
     this.vet1,
+    this.image,
   });
 
   Map<String, dynamic> toMap() {
@@ -34,9 +36,10 @@ class Animal {
       "breed": breed,
       "gender": gender,
       "vet": vet1,
-      "grooming": grooming,
+      "groom": groom,
       "feed1": feed1,
       "feed2": feed2,
+      "image":image,
     };
   }
 
@@ -47,7 +50,8 @@ class Animal {
         breed = firestore['breed'],
         gender = firestore['gender'],
         vet1=firestore['vet1'],
-        grooming=firestore['grooming'],
+        groom=firestore['groom'],
        feed1=firestore['feed1'],
-       feed2=firestore['feed2'];
+       feed2=firestore['feed2'],
+       image=firestore['image'];
 }

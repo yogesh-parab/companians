@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:Final/Entitites/Animal.dart';
 import 'package:Final/providers/animal_provider.dart';
@@ -9,6 +11,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:Final/notifications/notification_plugins.dart';
 
 class AddPet extends StatefulWidget with NavigationStates {
   final Animal animal;
@@ -24,9 +27,18 @@ class _AddPetState extends State<AddPet> {
   TimeOfDay feed1;
   TimeOfDay feed2;
   bool isSwitched1 = true;
+  String image;
 
   File _selectedFile;
   final picker = ImagePicker();
+
+  onNotificationInLowerVersions(ReceivedNotification receivedNotification) {}
+  onNotificationClick(String payload) {}
+
+  static String base64String(Uint8List data) {
+    return base64Encode(data);
+  }
+
   getMyImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
     if (pickedFile != null) {
@@ -98,6 +110,7 @@ class _AddPetState extends State<AddPet> {
       typeController.text = widget.animal.type;
       breedController.text = widget.animal.breed;
       genderController.text = widget.animal.gender;
+      //_selectedFile = widget.animal.image;
       new Future.delayed(Duration.zero, () {
         final animalProvider =
             Provider.of<AnimalProvider>(context, listen: false);
@@ -109,6 +122,9 @@ class _AddPetState extends State<AddPet> {
     groom = DateTime.now();
     feed1 = TimeOfDay.now();
     feed2 = TimeOfDay.now();
+    notificationPlugin
+        .setListenerForLowerVersions(onNotificationInLowerVersions);
+    notificationPlugin.setOnNotificationClick(onNotificationClick);
   }
 
   @override
@@ -367,8 +383,20 @@ class _AddPetState extends State<AddPet> {
                 bottom: MediaQuery.of(context).size.height * 0.02,
                 right: MediaQuery.of(context).size.width * 0.08,
                 child: RaisedButton(
-                  onPressed: () {
-                    animalProvider.chnagevet(vet,groom,feed1,feed2);
+                  onPressed: () async {
+                    image = base64String(_selectedFile.readAsBytesSync());
+
+                    //await notificationPlugin.showNotification();
+                    await notificationPlugin.showDailyAtTime(
+                        feed1, "${nameController.text} is hungry");
+                    await notificationPlugin.showDailyAtTime(
+                        feed2, "${nameController.text} is hungry");
+                    await notificationPlugin.scheduleNotification(groom,
+                        "${nameController.text} has a vet grooming today");
+
+                    await notificationPlugin.scheduleNotification(vet,
+                        "${nameController.text} has a vet appointment today");
+                    animalProvider.chnagevet(vet, groom, feed1, feed2, image);
                     animalProvider.saveProduct();
                     if (widget.animal == null) {
                       BlocProvider.of<NavigationBloc>(context)
