@@ -35,7 +35,7 @@ class Animal {
       "type": type,
       "breed": breed,
       "gender": gender,
-      "vet": vet1,
+      "vet1": vet1,
       "groom": groom,
       "feed1": feed1,
       "feed2": feed2,

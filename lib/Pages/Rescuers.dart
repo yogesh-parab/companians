@@ -97,7 +97,7 @@ class _RescuersState extends State<Rescuers> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.all(5),
                                   child: Text(
                                     '${adoptList[index].name}' 
                                         
@@ -106,7 +106,7 @@ class _RescuersState extends State<Rescuers> {
                                   )),
                               
                               Padding(
-                                  padding: EdgeInsets.fromLTRB(10, 5, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
                                   child: Text('${adoptList[index].address}')),
                               Padding(
                                 padding: EdgeInsets.fromLTRB(10, 5, 5, 0),

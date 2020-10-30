@@ -26,6 +26,10 @@ class _AddPetState extends State<AddPet> {
   DateTime groom;
   TimeOfDay feed1;
   TimeOfDay feed2;
+  String feed1_time = "";
+  String feed2_time = "";
+  String vet_date = "";
+  String groom_date = "";
   bool isSwitched1 = true;
   String image;
 
@@ -37,6 +41,10 @@ class _AddPetState extends State<AddPet> {
 
   static String base64String(Uint8List data) {
     return base64Encode(data);
+  }
+
+  static MemoryImage imageFromBase64String(String base64String) {
+    return MemoryImage(base64Decode(base64String));
   }
 
   getMyImage(ImageSource source) async {
@@ -110,7 +118,22 @@ class _AddPetState extends State<AddPet> {
       typeController.text = widget.animal.type;
       breedController.text = widget.animal.breed;
       genderController.text = widget.animal.gender;
-      //_selectedFile = widget.animal.image;
+
+      feed1_time = widget.animal.feed1.substring(10, 15);
+      feed2_time = widget.animal.feed2.substring(10, 15);
+      vet_date = DateFormat.yMEd().format(DateTime(
+        int.parse(widget.animal.vet1.substring(0, 4)),
+        int.parse(widget.animal.vet1.substring(8, 10)),
+        int.parse(widget.animal.vet1.substring(5,7))
+      ));
+      groom_date = DateFormat.yMEd().format(DateTime(
+        int.parse(widget.animal.groom.substring(0, 4)),
+        int.parse(widget.animal.groom.substring(8, 10)),
+        int.parse(widget.animal.groom.substring(5,7))
+      ));
+      
+      MemoryImage image = imageFromBase64String(widget.animal.image);
+      //_selectedFile = File();
       new Future.delayed(Duration.zero, () {
         final animalProvider =
             Provider.of<AnimalProvider>(context, listen: false);
@@ -122,6 +145,7 @@ class _AddPetState extends State<AddPet> {
     groom = DateTime.now();
     feed1 = TimeOfDay.now();
     feed2 = TimeOfDay.now();
+
     notificationPlugin
         .setListenerForLowerVersions(onNotificationInLowerVersions);
     notificationPlugin.setOnNotificationClick(onNotificationClick);
@@ -234,6 +258,7 @@ class _AddPetState extends State<AddPet> {
                             if (date != null) {
                               setState(() {
                                 vet = date;
+                                vet_date = DateFormat.yMEd().format(vet);
                               });
                             }
                           },
@@ -242,7 +267,7 @@ class _AddPetState extends State<AddPet> {
                             color: Color(0xffBC0253),
                           ),
                         ),
-                        Expanded(child: Text(DateFormat.yMEd().format(vet)))
+                        Expanded(child: Text(vet_date))
                       ],
                     ),
                   ),
@@ -263,6 +288,7 @@ class _AddPetState extends State<AddPet> {
                             if (date != null) {
                               setState(() {
                                 groom = date;
+                                groom_date = DateFormat.yMEd().format(groom);
                               });
                             }
                           },
@@ -271,7 +297,7 @@ class _AddPetState extends State<AddPet> {
                             color: Color(0xffBC0253),
                           ),
                         ),
-                        Expanded(child: Text(DateFormat.yMEd().format(groom)))
+                        Expanded(child: Text(groom_date))
                       ],
                     ),
                   ),
@@ -291,6 +317,9 @@ class _AddPetState extends State<AddPet> {
                             if (t != null) {
                               setState(() {
                                 feed1 = t;
+                                feed1_time = t.hour.toString() +
+                                    ":" +
+                                    t.minute.toString();
                               });
                             }
                           }),
@@ -302,8 +331,7 @@ class _AddPetState extends State<AddPet> {
                             width: 2,
                             color: Color(0xffBC0253),
                           )),
-                          child: Center(
-                              child: Text("${feed1.hour}:${feed1.minute}"))),
+                          child: Center(child: Text("${feed1_time}"))),
                     ]),
                   ),
                   Container(
@@ -322,6 +350,9 @@ class _AddPetState extends State<AddPet> {
                             if (t != null) {
                               setState(() {
                                 feed2 = t;
+                                feed2_time = t.hour.toString() +
+                                    ":" +
+                                    t.minute.toString();
                               });
                             }
                           }),
@@ -333,8 +364,7 @@ class _AddPetState extends State<AddPet> {
                             width: 2,
                             color: Color(0xffBC0253),
                           )),
-                          child: Center(
-                              child: Text("${feed2.hour}:${feed2.minute}"))),
+                          child: Center(child: Text("${feed2_time}"))),
                     ]),
                   ),
                 ],
