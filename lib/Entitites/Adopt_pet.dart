@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AdoptableAnimal {
   String id;
   String name;
@@ -9,20 +11,28 @@ class AdoptableAnimal {
   String owner_no;
   String image;
 
-  AdoptableAnimal(this.id, this.name, this.type, this.breed, this.age,
-      this.address, this.owner_name, this.owner_no, this.image);
+  AdoptableAnimal(
+      {@required this.id,
+      @required this.name,
+      @required this.type,
+      @required this.breed,
+      @required this.age,
+      @required this.address,
+      @required this.owner_name,
+      @required this.owner_no,
+      @required this.image});
 
   factory AdoptableAnimal.fromJson(dynamic json) {
     return AdoptableAnimal(
-      "${json['id']}",
-      "${json['name']}",
-      "${json['type']}",
-      "${json['breed']}",
-      "${json['age']}",
-      "${json['address']}",
-      "${json['owner_name']}",
-      "${json['owner_no']}",
-      "${json['image']}",
+      id:"${json['id']}",
+      name:"${json['name']}",
+      type:"${json['type']}",
+      breed:"${json['breed']}",
+      age:"${json['age']}",
+     address: "${json['address']}",
+      owner_name:"${json['owner_name']}",
+      owner_no:"${json['owner_no']}",
+      image:"${json['image']}",
     );
   }
 

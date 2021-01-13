@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:Final/Entitites/Animal.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +30,7 @@ class NotificationPlugin {
 
   initializePlatformSpecifics() {
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('mipmap/notif.png');
+        AndroidInitializationSettings('iicon');
     var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -163,14 +162,14 @@ class NotificationPlugin {
 
   Future<void> scheduleNotification( DateTime date,String title) async {
     
-    var scheduleNotificationDateTime = date.add(Duration(seconds: 15));
+    var scheduleNotificationDateTime = date;
     var androidChannelSpecifics = AndroidNotificationDetails(
       'CHANNEL_ID 1',
       'CHANNEL_NAME 1',
       "CHANNEL_DESCRIPTION 1",
-      icon: 'secondary_icon',
-      sound: RawResourceAndroidNotificationSound('my_sound'),
-      largeIcon: DrawableResourceAndroidBitmap('large_notf_icon'),
+      icon: 'iicon',
+      
+      largeIcon: DrawableResourceAndroidBitmap('iicon'),
       enableLights: true,
       color: const Color.fromARGB(255, 255, 0, 0),
       ledColor: const Color.fromARGB(255, 255, 0, 0),

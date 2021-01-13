@@ -74,11 +74,36 @@ class _SideBarState extends State<SideBar>
                 child: Container(
                   child: Column(
                     children: [
-                      SafeArea(
-                        child: SizedBox(
-                          height: height / 4.48,
-                        ),
+                      SizedBox(
+                        height: 30,
                       ),
+                      SafeArea(
+                        child: Center(
+                          child: 
+                            
+                             Row(
+                              children:[ Column(
+                                children: [
+                                  Text(
+                                    "Pet's",
+                                    style: TextStyle(
+                                        color: Color(0xFFBA2D65),
+                                        fontSize: 45,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "            Point",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 45,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),/*SizedBox(width: 10,)*/],
+                            ),
+                          ),
+                        ),
+                      
                       Divider(
                         height: 64,
                         thickness: 0.5,
@@ -87,8 +112,10 @@ class _SideBarState extends State<SideBar>
                         endIndent: 32,
                       ),
                       MenuItem(
-                        height:MediaQuery.of(context).size.height-height / 4.48-kToolbarHeight,
-                        width:MediaQuery.of(context).size.width*0.8,
+                        height: MediaQuery.of(context).size.height -
+                            height / 15 -
+                            kToolbarHeight,
+                        width: MediaQuery.of(context).size.width * 0.8,
                         title: 'adopt',
                         color: Color(0xFFBA2D65),
                         func: () {
@@ -97,9 +124,12 @@ class _SideBarState extends State<SideBar>
                               .add(NavigationEvents.AdoptClickedEvent);
                         },
                       ),
-                      MenuItem( height:MediaQuery.of(context).size.height-height / 4.48-kToolbarHeight,
-                        width:MediaQuery.of(context).size.width*0.8,
-                        title: 'rescuers',
+                      MenuItem(
+                        height: MediaQuery.of(context).size.height -
+                            height / 15 -
+                            kToolbarHeight,
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        title: 'donate',
                         color: Colors.white,
                         func: () {
                           onIconPressed();
@@ -107,8 +137,11 @@ class _SideBarState extends State<SideBar>
                               .add(NavigationEvents.RescuersClickedEvent);
                         },
                       ),
-                      MenuItem( height:MediaQuery.of(context).size.height-height / 4.48-kToolbarHeight,
-                        width:MediaQuery.of(context).size.width*0.8,
+                      MenuItem(
+                        height: MediaQuery.of(context).size.height -
+                            height / 15 -
+                            kToolbarHeight,
+                        width: MediaQuery.of(context).size.width * 0.8,
                         title: 'breeds',
                         color: Color(0xFFBA2D65),
                         func: () {
@@ -117,40 +150,39 @@ class _SideBarState extends State<SideBar>
                               .add(NavigationEvents.BreedsClickedEvent);
                         },
                       ),
-                      MenuItem( height:MediaQuery.of(context).size.height-height / 4.48-kToolbarHeight,
-                        width:MediaQuery.of(context).size.width*0.8,
-                        title: 'shop',
+                      MenuItem(
+                        height: MediaQuery.of(context).size.height -
+                            height / 15 -
+                            kToolbarHeight,
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        title: 'request',
                         color: Colors.white,
-                        func: () {
-                          onIconPressed();
-                          BlocProvider.of<NavigationBloc>(context)
-                              .add(NavigationEvents.ShopClickedEvent);
-                        },
-                      ),
-                      MenuItem( height:MediaQuery.of(context).size.height-height / 4.48-kToolbarHeight,
-                        width:MediaQuery.of(context).size.width*0.8,
-                        title: 'donate',
-                        color: Color(0xFFBA2D65),
                         func: () {
                           onIconPressed();
                           BlocProvider.of<NavigationBloc>(context)
                               .add(NavigationEvents.DonateClickedEvent);
                         },
                       ),
-                      MenuItem( height:MediaQuery.of(context).size.height-height / 4.48-kToolbarHeight,
-                        width:MediaQuery.of(context).size.width*0.8,
+                      MenuItem(
+                        height: MediaQuery.of(context).size.height -
+                            height / 15 -
+                            kToolbarHeight,
+                        width: MediaQuery.of(context).size.width * 0.8,
                         title: 'maps',
-                        color: Colors.white,
+                        color: Color(0xFFBA2D65),
                         func: () {
                           onIconPressed();
                           BlocProvider.of<NavigationBloc>(context)
                               .add(NavigationEvents.HelpClickedEvent);
                         },
                       ),
-                      MenuItem( height:MediaQuery.of(context).size.height-height / 4.48-kToolbarHeight,
-                        width:MediaQuery.of(context).size.width*0.8,
-                        title: 'about us',
-                        color: Color(0xFFBA2D65),
+                      MenuItem(
+                        height: MediaQuery.of(context).size.height -
+                            height / 15 -
+                            kToolbarHeight,
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        title: 'put up',
+                        color: Colors.white,
                         func: () {
                           onIconPressed();
                           BlocProvider.of<NavigationBloc>(context)

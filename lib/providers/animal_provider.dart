@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class AnimalProvider with ChangeNotifier {
+  final String iid;
   final firestoreService = FireStoreservice();
 
   String _name;
@@ -18,6 +19,8 @@ class AnimalProvider with ChangeNotifier {
   String _feed2;
   String _image;
   var uuid = Uuid();
+
+  AnimalProvider(this.iid);
 
   String get name => _name;
   String get type => _type;
@@ -85,9 +88,9 @@ class AnimalProvider with ChangeNotifier {
         groom: groom,
         feed1: feed1,
         feed2: feed2,
-        image:image,
+        image: image,
       );
-      firestoreService.saveAnimal(newAnimal);
+      firestoreService.saveAnimal(newAnimal,iid);
     } else {
       var updateAnimal = Animal(
         name: name,
@@ -99,13 +102,13 @@ class AnimalProvider with ChangeNotifier {
         groom: groom,
         feed1: feed1,
         feed2: feed2,
-        image:image,
+        image: image,
       );
-      firestoreService.saveAnimal(updateAnimal);
+      firestoreService.saveAnimal(updateAnimal,iid);
     }
   }
 
   removeAnimal(String id) {
-    firestoreService.removeProduct(id);
+    firestoreService.removeProduct(id,iid);
   }
 }

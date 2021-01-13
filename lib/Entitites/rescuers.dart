@@ -1,25 +1,33 @@
+import 'package:flutter/material.dart';
+
 class Rescue {
   String id;
   String name;
   String mobile;
   String address;
   String image;
+  String amount;
+  String request;
 
-  Rescue(
-    this.id,
-    this.name,
-    this.mobile,
-    this.address,
-    this.image,
-  );
+  Rescue({
+    @required this.id,
+    @required this.name,
+    @required this.mobile,
+    @required this.address,
+    @required this.image,
+    @required this.amount,
+    @required this.request,
+  });
 
   factory Rescue.fromJson(dynamic json) {
     return Rescue(
-      "${json['id']}",
-      "${json['name']}",
-      "${json['mobile']}",
-      "${json['address']}",
-      "${json['image']}",
+      id:"${json['id']}",
+      name:"${json['name']}",
+      mobile:"${json['mobile']}",
+      address:"${json['address']}",
+      image:"${json['image']}",
+      amount:"${json['amount']}",
+      request:"${json['request']}",
     );
   }
 
@@ -30,5 +38,7 @@ class Rescue {
         'mobile': mobile,
         'address': address,
         'image': image,
+        'amount': amount,
+        'request': request,
       };
 }

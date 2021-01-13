@@ -19,9 +19,7 @@ class _RescuersState extends State<Rescuers> {
   Future<List<Rescue>> getFeedbackList() async {
     return await http.get(url).then((response) {
       var jsonFeedback = convert.jsonDecode(response.body) as List;
-      return jsonFeedback
-          .map((json) => Rescue.fromJson(json))
-          .toList();
+      return jsonFeedback.map((json) => Rescue.fromJson(json)).toList();
     });
   }
 
@@ -73,54 +71,74 @@ class _RescuersState extends State<Rescuers> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.network(
-                            "${adoptList[index].image}",
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.16,
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(20),
-                                topRight: Radius.circular(20)),
-                            color: Colors.white,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                  padding: EdgeInsets.all(5),
-                                  child: Text(
-                                    '${adoptList[index].name}' 
-                                        
-                                        ,
-                                    style: TextStyle(fontSize: 20),
-                                  )),
-                              
-                              Padding(
-                                  padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
-                                  child: Text('${adoptList[index].address}')),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(10, 5, 5, 0),
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.phone_in_talk),
-                                    Text("${adoptList[index].mobile}")
-                                  ],
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Request"),
+                              content: Text("${adoptList[index].request}"),
+                              actions: [
+                                FlatButton(
+                                  child: Text("OK"),
+                                  onPressed: () {Navigator.of(context).pop();},
                                 ),
-                              ),
-                            ],
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.network(
+                              "${adoptList[index].image}",
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        )
-                      ],
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.16,
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(20),
+                                  topRight: Radius.circular(20)),
+                              color: Colors.white,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Text(
+                                      '${adoptList[index].name}',
+                                      style: TextStyle(fontSize: 20),
+                                    )),
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                                    child: Text('${adoptList[index].address}')),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(10, 5, 5, 0),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.phone_in_talk),
+                                      Text("${adoptList[index].mobile}")
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(10, 10, 5, 0),
+                                    child: Text(
+                                        'requested amount : ${adoptList[index].amount}')),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   );
                 },

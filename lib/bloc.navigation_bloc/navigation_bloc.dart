@@ -1,11 +1,10 @@
 import 'package:Final/Pages/Adopt.dart';
 import 'package:Final/Pages/Breeds.dart';
-import 'package:Final/Pages/Donate.dart';
+import 'package:Final/Pages/Ask_Donate.dart';
 import 'package:Final/Pages/Rescuers.dart';
-import 'package:Final/Pages/Shop.dart';
-import 'package:Final/Pages/about_us.dart';
+import 'package:Final/Pages/add-adopt_pet.dart';
 import 'package:Final/Pages/homepage.dart';
-import 'package:Final/Pages/Help.dart';
+import 'package:Final/Pages/Maps.dart';
 import 'package:Final/Pages/add_pet.dart';
 
 import 'package:bloc/bloc.dart';
@@ -53,9 +52,7 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
       case NavigationEvents.RescuersClickedEvent:
         yield Rescuers();
         break;
-      case NavigationEvents.ShopClickedEvent:
-        yield Shop();
-        break;
+      
       case NavigationEvents.AddPetClickedEvent:
         yield AddPet();
         break;

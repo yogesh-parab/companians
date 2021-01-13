@@ -13,9 +13,9 @@ class AnimalList extends StatefulWidget {
 }
 
 class _AnimalListState extends State<AnimalList> {
-  static MemoryImage imageFromBase64String(String base64String) {
+  /*static MemoryImage imageFromBase64String(String base64String) {
     return MemoryImage(base64Decode(base64String));
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +39,10 @@ class _AnimalListState extends State<AnimalList> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
-                          child: Image(
-                            image: imageFromBase64String(animals[index].image),
+                          child: Image.network(
+                            animals[index].image,
                             height: MediaQuery.of(context).size.height * 0.2,
-                            width: MediaQuery.of(context).size.height * 0.2,
+                            width: MediaQuery.of(context).size.width * 0.40,
                             fit: BoxFit.cover,
                           ),
                         ),

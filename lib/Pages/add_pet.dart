@@ -1,51 +1,79 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:Final/Entitites/Animal.dart';
 import 'package:Final/providers/animal_provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:Final/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:Final/notifications/notification_plugins.dart';
 
 class AddPet extends StatefulWidget with NavigationStates {
   final Animal animal;
-
+  String id;
   AddPet([this.animal]);
   @override
   _AddPetState createState() => _AddPetState();
 }
 
 class _AddPetState extends State<AddPet> {
-  DateTime vet;
-  DateTime groom;
-  TimeOfDay feed1;
-  TimeOfDay feed2;
+  DateTime vet = DateTime.now();
+  DateTime groom= DateTime.now();
+  TimeOfDay feed1= TimeOfDay.now();
+  TimeOfDay feed2= TimeOfDay.now();
   String feed1_time = "";
   String feed2_time = "";
   String vet_date = "";
   String groom_date = "";
   bool isSwitched1 = true;
   String image;
+  String id;
 
   File _selectedFile;
+
   final picker = ImagePicker();
+
+  static var httpClient = new HttpClient();
+  Future<File> _downloadFile(String url, String filename) async {
+    var request = await httpClient.getUrl(Uri.parse(url));
+    var response = await request.close();
+    var bytes = await consolidateHttpClientResponseBytes(response);
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    File file = new File('$dir/$filename');
+    await file.writeAsBytes(bytes);
+    return file;
+  }
+
+  
+
+  Future<String> uploadImageToFirebase(BuildContext context) async {
+    String fileName = basename(_selectedFile.path);
+    Reference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child('photos/$fileName');
+    UploadTask uploadTask = firebaseStorageRef.putFile(_selectedFile);
+    final ref = FirebaseStorage.instance.ref().child('photos/$fileName');
+
+    var image = await ref.getDownloadURL();
+    return image;
+  }
 
   onNotificationInLowerVersions(ReceivedNotification receivedNotification) {}
   onNotificationClick(String payload) {}
 
-  static String base64String(Uint8List data) {
+  /*static String base64String(Uint8List data) {
     return base64Encode(data);
-  }
+  }*/
 
-  static MemoryImage imageFromBase64String(String base64String) {
-    return MemoryImage(base64Decode(base64String));
-  }
+  /*static MemoryImage imageFromBase64String(String base64String) {
+    return MemoryImage(base64Decode(base64String));}*/
 
   getMyImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
@@ -70,8 +98,8 @@ class _AddPetState extends State<AddPet> {
         borderRadius: BorderRadius.all(Radius.circular(20)),
         child: Image.file(
           _selectedFile,
-          height: MediaQuery.of(context).size.height * 0.15,
-          width: MediaQuery.of(context).size.width * 0.3,
+          height: MediaQuery.of(this.context).size.height * 0.15,
+          width: MediaQuery.of(this.context).size.width * 0.3,
           fit: BoxFit.cover,
         ),
       );
@@ -80,8 +108,8 @@ class _AddPetState extends State<AddPet> {
         borderRadius: BorderRadius.all(Radius.circular(20)),
         child: Image.asset(
           "assets/images/dd.png",
-          height: MediaQuery.of(context).size.height * 0.15,
-          width: MediaQuery.of(context).size.width * 0.3,
+          height: MediaQuery.of(this.context).size.height * 0.15,
+          width: MediaQuery.of(this.context).size.width * 0.3,
           fit: BoxFit.cover,
         ),
       );
@@ -110,7 +138,7 @@ class _AddPetState extends State<AddPet> {
       genderController.text = '';
       new Future.delayed(Duration.zero, () {
         final animalProvider =
-            Provider.of<AnimalProvider>(context, listen: false);
+            Provider.of<AnimalProvider>(this.context, listen: false);
         animalProvider.loadValues(Animal());
       });
     } else {
@@ -122,29 +150,29 @@ class _AddPetState extends State<AddPet> {
       feed1_time = widget.animal.feed1.substring(10, 15);
       feed2_time = widget.animal.feed2.substring(10, 15);
       vet_date = DateFormat.yMEd().format(DateTime(
-        int.parse(widget.animal.vet1.substring(0, 4)),
-        int.parse(widget.animal.vet1.substring(8, 10)),
-        int.parse(widget.animal.vet1.substring(5,7))
-      ));
+          int.parse(widget.animal.vet1.substring(0, 4)),
+          int.parse(widget.animal.vet1.substring(8, 10)),
+          int.parse(widget.animal.vet1.substring(5, 7))));
       groom_date = DateFormat.yMEd().format(DateTime(
-        int.parse(widget.animal.groom.substring(0, 4)),
-        int.parse(widget.animal.groom.substring(8, 10)),
-        int.parse(widget.animal.groom.substring(5,7))
-      ));
-      
-      MemoryImage image = imageFromBase64String(widget.animal.image);
-      //_selectedFile = File();
+          int.parse(widget.animal.groom.substring(0, 4)),
+          int.parse(widget.animal.groom.substring(8, 10)),
+          int.parse(widget.animal.groom.substring(5, 7))));
+      //_selectedFile = _downloadFile(widget.animal.image, 'filename1').then((value) => null) as File;
+
+      //MemoryImage image = imageFromBase64String(widget.animal.image);
+
+      // _selectedFile =await _downloadFile(widget.animal.image, widget.animal.id);
       new Future.delayed(Duration.zero, () {
         final animalProvider =
-            Provider.of<AnimalProvider>(context, listen: false);
+            Provider.of<AnimalProvider>(this.context, listen: false);
         animalProvider.loadValues(widget.animal);
       });
     }
     super.initState();
-    vet = DateTime.now();
+    /*vet = DateTime.now();
     groom = DateTime.now();
     feed1 = TimeOfDay.now();
-    feed2 = TimeOfDay.now();
+    feed2 = TimeOfDay.now();*/
 
     notificationPlugin
         .setListenerForLowerVersions(onNotificationInLowerVersions);
@@ -181,6 +209,9 @@ class _AddPetState extends State<AddPet> {
                             onPressed: () {
                               getMyImage(ImageSource.camera);
                             }),
+                        SizedBox(
+                          height: 10,
+                        ),
                         IconButton(
                             icon: Icon(Icons.photo_album,
                                 color: Color(0xffBC0253),
@@ -414,9 +445,9 @@ class _AddPetState extends State<AddPet> {
                 right: MediaQuery.of(context).size.width * 0.08,
                 child: RaisedButton(
                   onPressed: () async {
-                    image = base64String(_selectedFile.readAsBytesSync());
-
-                    //await notificationPlugin.showNotification();
+                    //image = base64String(_selectedFile.readAsBytesSync());
+                    String image = await uploadImageToFirebase(context);
+                    await notificationPlugin.showNotification();
                     await notificationPlugin.showDailyAtTime(
                         feed1, "${nameController.text} is hungry");
                     await notificationPlugin.showDailyAtTime(
@@ -441,14 +472,14 @@ class _AddPetState extends State<AddPet> {
                   ),
                   color: Color(0xffBC0253),
                 )),
-            Positioned(
+            /*Positioned(
               right: MediaQuery.of(context).size.width * 0.15,
               bottom: MediaQuery.of(context).size.height * 0.125,
               child: Switch(
                 value: isSwitched1,
                 onChanged: null,
-              ),
-            )
+              )
+            )*/
           ],
         ),
       ),
