@@ -1,6 +1,13 @@
-# Final
+<b><h2>PET'S POINT - A PANACEA TO ALL PET RELATED NEEDS.</h2>
 
-A new Flutter project.
+Pet’s Point is a one-stop solution for all individual's pet-related needs. The application helps you to keep up with all your pet demands and their requirements. An interactive mobile pet application available for use on both iOS and Android platforms. The app lets you create, edit and set reminders for your pet. Also, the option to adopt and put up pets for adoption is available.
+Pet’s point tries to achieve the goal of bringing together people who are willing to help and nurture animals and the rescuing community by providing them a platform to interact.<br>
+KEY FEATURES:<br>
+*Set feeding and grooming reminders<br>
+*Easy navigation and clean UI<br>
+*Google maps support for navigation to parks, vets, etc Tips and tricks to train your pet more <br>*efficiently Calculate pet’s BMI and keep track of his health Adopt a pet<br>
+*Contact/Help rescuers and NGO’s<br>
+*Know more about various animal breeds<br>
 
 ## Getting Started
 
