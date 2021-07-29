@@ -8,6 +8,12 @@ KEY FEATURES:<br>
 *Google maps support for navigation to parks, vets, etc Tips and tricks to train your pet more <br>*efficiently Calculate pet’s BMI and keep track of his health Adopt a pet<br>
 *Contact/Help rescuers and NGO’s<br>
 *Know more about various animal breeds<br>
+  
+  <img width="1440" alt="Screenshot 2021-07-29 at 7 11 26 PM" src="https://user-images.githubusercontent.com/59704428/127502694-f3cede79-3b62-46e2-bc6f-7b1f4da0cd17.png"><br>
+  
+  <img width="1440" alt="Screenshot 2021-07-29 at 7 11 35 PM" src="https://user-images.githubusercontent.com/59704428/127502799-ee6cac33-84ee-445b-8b1f-4f0ed14132e4.png">
+
+
 
 ## Getting Started
 
